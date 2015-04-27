@@ -18,3 +18,18 @@ We evaluated 12 runs in both evaluation suites, CDS 2014 and CLEF 2014. Seven ru
 ##Experimental Setup
 The following figure depecits the general archtictecture.
 ![Alt text](/figures/arch.png?raw=true "Optional Title")
+
+
+##How to reprduce
+This is a step by step guide for setting up the experiments.
+
+###Prerequisites
+* A unix like OS (any Linux Distribution, Mac OS, etc..)
+* [Apache Solr 4.10.2](http://lucene.apache.org/solr/)
+* [Ruby 2.1.1](https://www.ruby-lang.org)
+* [PostgreSQL 9.4.0](http://www.postgresql.org/)
+* [Java 1.8](https://java.com/en/download/) 
+```
+gem install bundle
+bundle install
+```
