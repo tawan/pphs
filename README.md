@@ -20,7 +20,7 @@ The following figure depecits the general archtictecture.
 ![Alt text](/figures/arch.png?raw=true "Optional Title")
 
 
-##How to reprduce
+##How to reproduce
 This is a step by step guide for setting up the experiments.
 
 ###Prerequisites
