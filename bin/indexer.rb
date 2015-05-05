@@ -1,27 +1,23 @@
 require 'nokogiri'
+require 'rsolr'
+require_relative '../lib/indexer'
 
-class Indexer
-  END_OF_CONTENT = /^#EOR/
-  UID = /^#UID:(\S+)/
-  CONTENT = /^#CONTENT/
+require 'logger'
 
-  def self.parse(raw)
-    document = { :content => ''}
-    content_flag = false
-    raw.each_line do |line|
-      if line =~ END_OF_CONTENT
-        html = Nokogiri::HTML(document[:content])
-        t = html.css("title")
-        document[:title] = t.nil? ? "" : t.text
-        
-        yield JSON.generate(document)
-        document = { :content => '' }
-        content_flag = false
-      end
-      uid_match = line.match(UID)
-      document[:id] = uid_match[1] unless uid_match.nil?
-      document[:content] << line if content_flag
-      content_flag = true if line =~ CONTENT
-    end
-  end
+logger = Logger.new($stdout)
+logger.level = Logger::INFO
+
+if ARGV[0].nil?
+  STDERR.puts "No url to solr core given"
+  exit 2
 end
+
+solr_client = RSolr.connect :url => ARGV[0] #"http://127.0.0.1:8983/solr/pphs_clef"
+logger.info "connected to ARGV[0]"
+solr_client.delete_by_query "*:*"
+solr_client.commit
+logger.info "deleted all documents from index"
+
+
+indexer = Indexer.new(solr_client, logger)
+indexer.process($stdin)

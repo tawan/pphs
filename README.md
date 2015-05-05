@@ -29,7 +29,19 @@ This is a step by step guide for setting up the experiments.
 * [Ruby 2.1.1](https://www.ruby-lang.org)
 * [PostgreSQL 9.4.0](http://www.postgresql.org/)
 * [Java 1.8](https://java.com/en/download/) 
+
+###Shell commands
+
+Install the required ruby gems.
 ```
 gem install bundle
 bundle install
+```
+
+Create solr cores for both the CLEF 2014 and th CDS 2014 collection.
+The solr schemas can be found in the [schemata directory](schemata).
+
+Index the CLEF 2014 collection
+```
+find path/to/clef14-data/files | grep -e ".dat$"  | xargs cat | ruby bin/indexer.rb http://127.0.0.1:8983/solr/clef_core
 ```
