@@ -1,4 +1,5 @@
 require 'logger'
+require 'nokogiri'
 
 class Indexer
   END_OF_CONTENT = /^#EOR/

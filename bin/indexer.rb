@@ -1,4 +1,3 @@
-require 'nokogiri'
 require 'rsolr'
 require_relative '../lib/indexer'
 

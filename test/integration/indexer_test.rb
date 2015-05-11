@@ -19,7 +19,7 @@ describe Indexer do
 
   describe "process" do
     it "sends batches of parsed documents to a solr client" do
-      solr_client = RSolr.connect "http://127.0.0.1:9999/solr/pphs_test"
+      solr_client = RSolr.connect :url => "http://127.0.0.1:9999/solr/pphs_test"
       solr_client.delete_by_query "*:*"
       solr_client.commit
       solr_client.get('select', :params => {:q => '*:*', :wt => :json})[:response][:docs].must_be_empty
@@ -30,7 +30,7 @@ describe Indexer do
       result = solr_client.get('select', :params => {:q => '*:*', :wt => :json})[:response][:docs]
       @parsed_fixtures.each do |f|
         result.collect { |h| h[:id] }.must_include f[:id]
-        result.collect { |h| h[:title][0] }.must_include f[:title]
+        result.collect { |h| h[:title] }.must_include f[:title]
       end
     end
   end
